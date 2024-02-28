@@ -1,9 +1,7 @@
 import { styled, alpha, createTheme, ThemeProvider } from '@mui/material/styles';
-import AppBar from '@mui/material/AppBar';
+import { AppBar, Toolbar, InputBase } from '@mui/material';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
 import { Link, useParams } from 'react-router-dom';
 import { MovieType } from '../types/ApiResponseTypes';
@@ -57,34 +55,12 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
-export default function SearchPage() {
+export default function AppBarSearch() {
     const [searchText, setSearchText] = useState('');
-    const [searchResultsMovies, setSearchResultsMovies] = useState<MovieType[]>();
-
-    const fetchSearch = async () => {
-        const { data } = await api.get(`search/movie?`, {
-            params: {
-                query: searchText,
-                api_key: import.meta.env.VITE_API_KEY,
-            },
-        });
-        setSearchResultsMovies(data.results);
-        console.log(data.results)
-    };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setSearchText(event.target.value);
     };
-
-    const handleKeyPress = (event: any) => {
-        if (event.key === 'Enter') {
-            fetchSearch();
-        }
-    };
-
-    useEffect(() => {
-        fetchSearch();
-    }, [])
 
     return (
         <ThemeProvider theme={theme}>
@@ -109,30 +85,29 @@ export default function SearchPage() {
                                 inputProps={{ 'aria-label': 'search' }}
                                 value={searchText}
                                 onChange={handleInputChange}
-                                onKeyDown={handleKeyPress}
                             />
                         </Search>
                         <Box marginX={2} p={0.85} sx={{
                             ":hover": {
                                 bgcolor: "#50738C",
-                                transition: "background-color 0.3s ease-in-out" // Adicionando uma transição suave
+                                transition: "background-color 0.3s ease-in-out"
                             },
                             cursor: "pointer",
                             borderRadius: 1
                         }}>
-                            <Link to={`../search/movie?${searchText}`} reloadDocument>
+                            <Link to={`../searchpage/${searchText}`} reloadDocument>
                                 <SearchIcon color="secondary" />
                             </Link>
                         </Box>
                     </Toolbar>
                 </AppBar>
             </Box>
-            {
+            {/* {
                 searchResultsMovies && searchResultsMovies.length > 0 ? (
                     <Box paddingY={4} sx={{ display: "flex", flexWrap: "wrap", gap: "16px", justifyContent: "center", listStyle: "none" }} >
                         {searchResultsMovies.map((movie: MovieType) => (
                             <Box key={movie.id} marginBottom={24} sx={{ width: "17.5%" }}>
-                                <Link to={`../movies/${movie.id}`} reloadDocument>
+                                <Link to={`/`} reloadDocument>
                                     <Box sx={{ width: 300, height: 50, mb: 4, mx: "auto" }} >
                                         <Card>
                                             <CardMedia
@@ -158,7 +133,7 @@ export default function SearchPage() {
                         ))}
                     </Box>
                 ) : <></>
-            }
+            } */}
         </ThemeProvider>
     );
 }

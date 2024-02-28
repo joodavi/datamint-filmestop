@@ -3,9 +3,9 @@ import { MovieType } from "./types/ApiResponseTypes";
 import api from "./services/api";
 import { Link } from "react-router-dom";
 import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
-import AppbarSearch from "./components/AppBar";
 import blankImage from './assets/blank_image.png';
 import Carousel from "./components/Carousel";
+import AppBarSearch from "./components/AppBarSearch";
 
 export default function App() {
   const [popularMovies, setPopularMovies] = useState<MovieType[]>();
@@ -37,7 +37,7 @@ export default function App() {
 
   return (
     <>
-      <AppbarSearch />
+      <AppBarSearch />
       <Typography variant="h4" className="p-4 underline">
         Popular Movies
       </Typography>
@@ -46,7 +46,6 @@ export default function App() {
           popularMovies.map((movie: MovieType) => (
             <Link to={`movies/${movie.id}`}>
               <Box sx={{ width: 300, height: 250 }} >
-                {" "}
                 <Card>
                   <CardMedia
                     component="img"
@@ -79,7 +78,6 @@ export default function App() {
               <li key={movie.id}>
                 <Link to={`movies/${movie.id}`}>
                   <Box sx={{ width: 300, height: 50, mb: 4, mx: "auto" }} >
-                    {" "}
                     <Card>
                       <CardMedia
                         component="img"

@@ -6,28 +6,28 @@ import { Box, Card, CardContent, CardMedia, Typography } from "@mui/material";
 import blankImage from '../assets/blank_image.png';
 import AppBarSearch from "../components/AppBarSearch";
 
-export default function GenrePage() {
-    const { id } = useParams();
+export default function NewSearchPage() {
+    const { query } = useParams();
 
-    const [moviesByGenre, setMoviesByGenre] = useState<MovieType[]>();
+    const [searchResult, setSearchResult] = useState<MovieType[]>();
 
-    async function fetchMoviesByGenre() {
+    async function fetchSearch() {
         const { data } = await api.get(
-            `discover/movie?with_genres=${id}&api_key=${import.meta.env.VITE_API_KEY}`
+            `search/movie?query=${query}&api_key=${import.meta.env.VITE_API_KEY}`
         );
-        setMoviesByGenre(data.results);
+        setSearchResult(data.results);
     }
 
     useEffect(() => {
-        fetchMoviesByGenre();
+        fetchSearch();
     }, []);
 
     return (
         <>
             <AppBarSearch />
             <ul className="flex flex-wrap p-4">
-                {moviesByGenre &&
-                    moviesByGenre.map((movie: MovieType) => (
+                {searchResult &&
+                    searchResult.map((movie: MovieType) => (
                         <li key={movie.id} className="w-1/6 mb-52">
                             <Link to={`../movies/${movie.id}`}>
                                 <Box sx={{ width: 300, height: 50, mb: 4, mx: "auto" }} >

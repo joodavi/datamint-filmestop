@@ -4,11 +4,11 @@ import { MovieType, CastType } from "../types/ApiResponseTypes";
 import api from "../services/api";
 
 import { Box, Card, CardContent, CardMedia, ThemeProvider, Typography, createTheme } from "@mui/material";
-import SearchAppBar from "../components/AppBar";
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import blankImage from '../assets/blank_image.png';
 import blankPerson from '../assets/person_blank_image.png';
 import Carousel from "../components/Carousel";
+import AppBarSearch from "../components/AppBarSearch";
 
 const theme = createTheme({
   palette: {
@@ -68,7 +68,7 @@ export default function MoviePage() {
 
   return (
     <Box sx={{ bgcolor: '#151515', height: "100vh" }}>
-      <SearchAppBar />
+      <AppBarSearch />
       {movie && (
         <ThemeProvider theme={theme}>
           <div>
