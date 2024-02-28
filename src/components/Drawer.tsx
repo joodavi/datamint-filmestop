@@ -5,7 +5,7 @@ import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
-import { IconButton, ThemeProvider, createTheme } from '@mui/material';
+import { IconButton, ThemeProvider, Typography, createTheme } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import api from '../services/api';
 import { useEffect, useState } from 'react';
@@ -43,12 +43,20 @@ export default function GenreDrawer() {
     }, []);
 
     const DrawerList = (
-        <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
+        <Box sx={{ 
+                width: 250, 
+                height: "100%", 
+                bgcolor: "#0A1E28", 
+                color: "#69F58C" 
+            }} role="presentation" onClick={toggleDrawer(false)}>
             <List>
+            <Typography variant='h6' paddingX={2} sx={{ textDecoration: "underline" }}>
+                Genres
+            </Typography>
                 {moviesGenres &&
                     moviesGenres.map((genres) => (
                         <ListItem key={genres.name} disablePadding>
-                            <Link to={`../genres/${genres.id}`} reloadDocument>
+                            <Link to={`../genres/${genres.id}`} reloadDocument className="hover:bg-[#50738C]">
                                 <ListItemButton>
                                     <ListItemText primary={genres.name} />
                                 </ListItemButton>
@@ -73,7 +81,7 @@ export default function GenreDrawer() {
             >
                 <MenuIcon />
             </IconButton>
-            <Drawer open={open} onClose={toggleDrawer(false)} color="primary">
+            <Drawer open={open} onClose={toggleDrawer(false)}>
                 {DrawerList}
             </Drawer>
         </ThemeProvider>

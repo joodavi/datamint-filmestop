@@ -8,6 +8,7 @@ import SearchAppBar from "../components/AppBar";
 import PlayCircleOutlineIcon from '@mui/icons-material/PlayCircleOutline';
 import blankImage from '../assets/blank_image.png';
 import blankPerson from '../assets/person_blank_image.png';
+import Carousel from "../components/Carousel";
 
 const theme = createTheme({
   palette: {
@@ -142,10 +143,10 @@ export default function MoviePage() {
             Movie Cast
           </Typography>
           {castMovie && castMovie.length > 0 ? (
-            <ul className="flex gap-4 mx-4">
+            <Carousel>
               {castMovie.map((cast: CastType) => (
                 <li key={movie.id}>
-                  <Box sx={{ width: 200 }}>
+                  <Box sx={{ width: 100 }}>
                     <Card>
                       <CardMedia
                         component="img"
@@ -159,19 +160,19 @@ export default function MoviePage() {
                       />
                     </Card>
                     <CardContent className="flex items-center justify-between">
-                      <div className="flex flex-col">
+                      <Box>
                         <Typography variant="body2">
-                          {cast.name}
+                          {cast.name.split(' ').slice(0, 2).join(' ')}
                         </Typography>
                         <Typography variant="body1" color="secondary" className="italic">
-                          {cast.character}
+                          {cast.character.split(' ').slice(0, 2).join(' ')}
                         </Typography>
-                      </div>
+                      </Box>
                     </CardContent>
                   </Box>
                 </li>
               ))}
-            </ul>
+            </Carousel>
           ) : (
             <div />
           )}
@@ -180,7 +181,7 @@ export default function MoviePage() {
               <Typography variant="h4" className="p-4 underline">
                 Related Movies
               </Typography>
-              <ul className="flex gap-4 mx-4">
+              <Carousel className="flex gap-4 mx-4">
                 {moviesRelated.map((movie: MovieType) => (
                   <li key={movie.id}>
                     <Link to={`../movies/${movie.id}`} reloadDocument>
@@ -207,7 +208,7 @@ export default function MoviePage() {
                     </Link>
                   </li>
                 ))}
-              </ul>
+              </Carousel>
             </>
           ) : (
             <div />

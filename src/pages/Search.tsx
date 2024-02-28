@@ -5,9 +5,9 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import SearchIcon from '@mui/icons-material/Search';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { MovieType } from '../types/ApiResponseTypes';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import api from '../services/api';
 import { CardMedia, CardContent } from '@mui/material';
 import { Card } from 'react-bootstrap';
@@ -68,18 +68,20 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchPage() {
+    const { query } = useParams();
+
     const [searchText, setSearchText] = useState('');
     const [searchResultsMovies, setSearchResultsMovies] = useState<MovieType[]>();
 
-    const handleSearch = async () => {
-        const { data } = await api.get(`search/movie`, {
+    const fetchSearch = async () => {
+        const { data } = await api.get(`search/movie?${query}`, {
             params: {
                 query: searchText,
                 api_key: import.meta.env.VITE_API_KEY,
             },
         });
         setSearchResultsMovies(data.results);
-        console.log(data)
+        console.log(data.results)
     };
 
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -88,14 +90,18 @@ export default function SearchPage() {
 
     const handleKeyPress = (event: any) => {
         if (event.key === 'Enter') {
-            handleSearch();
+            fetchSearch();
         }
     };
+
+    useEffect(() => {
+        fetchSearch();
+    }, [])
 
     return (
         <ThemeProvider theme={theme}>
             <Box sx={{ flexGrow: 1 }}>
-                <AppBar position="static" color="primary">
+                <AppBar position="sticky" color="primary">
                     <Toolbar>
                         <GenreDrawer />
                         <Typography
@@ -110,9 +116,6 @@ export default function SearchPage() {
                             </Link>
                         </Typography>
                         <Search>
-                            <SearchIconWrapper onClick={handleSearch}>
-                                <SearchIcon color="secondary" />
-                            </SearchIconWrapper>
                             <StyledInputBase
                                 placeholder="Search…"
                                 inputProps={{ 'aria-label': 'search' }}
@@ -121,39 +124,53 @@ export default function SearchPage() {
                                 onKeyDown={handleKeyPress}
                             />
                         </Search>
+                        <Box marginX={2} p={0.85} sx={{
+                            ":hover": {
+                                bgcolor: "#50738C",
+                                transition: "background-color 0.3s ease-in-out" // Adicionando uma transição suave
+                            },
+                            cursor: "pointer",
+                            borderRadius: 1
+                        }}>
+                            <Link to={`../search/movie?${searchText}`} reloadDocument>
+                                <SearchIcon color="secondary" />
+                            </Link>
+                        </Box>
                     </Toolbar>
                 </AppBar>
             </Box>
-            <ul className="flex flex-wrap p-4">
-                {searchResultsMovies &&
-                    searchResultsMovies.map((movie: MovieType) => (
-                        <li key={movie.id} className="w-2/12 mb-48">
-                            <Link to={`../movies/${movie.id}`} reloadDocument>
-                                <Box sx={{ width: 300, height: 50, mb: 4, mx: "auto" }} >
-                                    {" "}
-                                    <Card>
-                                        <CardMedia
-                                            component="img"
-                                            image={
-                                                movie.backdrop_path ?
-                                                    `${import.meta.env.VITE_IMAGE_PROVIDER_BASEURL}/${movie.backdrop_path}` :
-                                                    blankImage
-                                            }
-                                            alt={movie.title || "Movie image"}
-                                            sx={{ height: "100%", objectFit: "contain" }}
-                                            className="transition ease-in-out delay-5 hover:scale-110"
-                                        />
-                                    </Card>
-                                    <CardContent className="flex items-center justify-between">
-                                        <Typography variant="h6">
-                                            {movie.title}
-                                        </Typography>
-                                    </CardContent>
-                                </Box>
-                            </Link>
-                        </li>
-                    ))}
-            </ul>
+            {
+                searchResultsMovies && searchResultsMovies.length > 0 ? (
+                    <ul className="flex flex-wrap p-4">
+                        {searchResultsMovies.map((movie: MovieType) => (
+                            <li key={movie.id} className="w-2/12 mb-48">
+                                <Link to={`../movies/${movie.id}`} reloadDocument>
+                                    <Box sx={{ width: 300, height: 50, mb: 4, mx: "auto" }} >
+                                        <Card>
+                                            <CardMedia
+                                                component="img"
+                                                image={
+                                                    movie.backdrop_path ?
+                                                        `${import.meta.env.VITE_IMAGE_PROVIDER_BASEURL}/${movie.backdrop_path}` :
+                                                        blankImage
+                                                }
+                                                alt={movie.title || "Movie image"}
+                                                sx={{ height: "100%", objectFit: "contain" }}
+                                                className="transition ease-in-out delay-5 hover:scale-110"
+                                            />
+                                        </Card>
+                                        <CardContent className="flex items-center justify-between">
+                                            <Typography variant="h6">
+                                                {movie.title}
+                                            </Typography>
+                                        </CardContent>
+                                    </Box>
+                                </Link>
+                            </li>
+                        ))}
+                    </ul>
+                ) : <></>
+            }
         </ThemeProvider>
     );
 }
