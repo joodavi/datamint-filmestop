@@ -6,7 +6,7 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MoviePage from "./pages/Movie.tsx";
 import GenrePage from "./pages/Genre.tsx";
-import NewSearchPage from "./pages/NewSearch.tsx";
+import SearchPage from "./pages/Search.tsx";
 
 const router = createBrowserRouter([
   {
@@ -19,7 +19,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/search/:query",
-    element: <NewSearchPage />
+    element: <SearchPage />
   },
   {
     path: "/genres/:id",

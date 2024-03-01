@@ -25,10 +25,15 @@ export default function GenrePage() {
     return (
         <>
             <AppBarSearch />
-            <ul className="flex flex-wrap p-4">
+            <Box padding={4} sx={{
+                    display: "flex",
+                    flexWrap: "wrap"
+                }}>
                 {moviesByGenre &&
                     moviesByGenre.map((movie: MovieType) => (
-                        <li key={movie.id} className="w-1/6 mb-52">
+                        <Box marginBottom={"208px"} key={movie.id} sx={{
+                            width: "25%"
+                        }}>
                             <Link to={`../movies/${movie.id}`}>
                                 <Box sx={{ width: 300, height: 50, mb: 4, mx: "auto" }} >
                                     <Card>
@@ -51,9 +56,9 @@ export default function GenrePage() {
                                     </CardContent>
                                 </Box>
                             </Link>
-                        </li>
+                        </Box>
                     ))}
-            </ul>
+            </Box>
         </>
     );
 }

@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import IconButton from '@mui/material/IconButton';
 import { NavigateBefore, NavigateNext } from '@mui/icons-material';
-import { Box, ThemeProvider, createTheme } from '@mui/material';
+import { Box, ThemeProvider, createTheme, IconButton } from '@mui/material';
 
 const theme = createTheme({
     palette: {

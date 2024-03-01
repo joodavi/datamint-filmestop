@@ -1,15 +1,8 @@
 import { styled, alpha, createTheme, ThemeProvider } from '@mui/material/styles';
-import { AppBar, Toolbar, InputBase } from '@mui/material';
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
+import { AppBar, Toolbar, InputBase, Typography, Box } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
-import { Link, useParams } from 'react-router-dom';
-import { MovieType } from '../types/ApiResponseTypes';
-import { useEffect, useState } from 'react';
-import api from '../services/api';
-import { CardMedia, CardContent } from '@mui/material';
-import { Card } from 'react-bootstrap';
-import blankImage from '../assets/blank_image.png';
+import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import GenreDrawer from '../components/Drawer';
 
 const theme = createTheme({
@@ -95,45 +88,13 @@ export default function AppBarSearch() {
                             cursor: "pointer",
                             borderRadius: 1
                         }}>
-                            <Link to={`../searchpage/${searchText}`} reloadDocument>
+                            <Link to={`../search/${searchText}`} reloadDocument>
                                 <SearchIcon color="secondary" />
                             </Link>
                         </Box>
                     </Toolbar>
                 </AppBar>
             </Box>
-            {/* {
-                searchResultsMovies && searchResultsMovies.length > 0 ? (
-                    <Box paddingY={4} sx={{ display: "flex", flexWrap: "wrap", gap: "16px", justifyContent: "center", listStyle: "none" }} >
-                        {searchResultsMovies.map((movie: MovieType) => (
-                            <Box key={movie.id} marginBottom={24} sx={{ width: "17.5%" }}>
-                                <Link to={`/`} reloadDocument>
-                                    <Box sx={{ width: 300, height: 50, mb: 4, mx: "auto" }} >
-                                        <Card>
-                                            <CardMedia
-                                                component="img"
-                                                image={
-                                                    movie.backdrop_path ?
-                                                        `${import.meta.env.VITE_IMAGE_PROVIDER_BASEURL}/${movie.backdrop_path}` :
-                                                        blankImage
-                                                }
-                                                alt={movie.title || "Movie image"}
-                                                sx={{ height: "100%", objectFit: "contain" }}
-                                                className="transition ease-in-out delay-5 hover:scale-110"
-                                            />
-                                        </Card>
-                                        <CardContent className="flex items-center justify-between">
-                                            <Typography variant="h6">
-                                                {movie.title}
-                                            </Typography>
-                                        </CardContent>
-                                    </Box>
-                                </Link>
-                            </Box>
-                        ))}
-                    </Box>
-                ) : <></>
-            } */}
         </ThemeProvider>
     );
 }

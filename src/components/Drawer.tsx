@@ -1,11 +1,5 @@
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import List from '@mui/material/List';
-import Divider from '@mui/material/Divider';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import { IconButton, ThemeProvider, Typography, createTheme } from '@mui/material';
+import { Box, Divider, Drawer, List, ListItem, ListItemText, ListItemButton, Typography } from '@mui/material';
+import { IconButton, ThemeProvider, createTheme } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import api from '../services/api';
 import { useEffect, useState } from 'react';
