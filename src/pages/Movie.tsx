@@ -37,7 +37,7 @@ export default function MoviePage() {
 
     async function fetchRelatedMovies() {
         const { data } = await api.get(
-            `movie/${id}/recommendations?api_key=${import.meta.env.VITE_API_KEY}`
+            `movie/${id}/similar?api_key=${import.meta.env.VITE_API_KEY}`
         );
         setMoviesRelated(data.results);
     }
